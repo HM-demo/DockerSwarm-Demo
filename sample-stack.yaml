@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+
+  tomcat:
+    image: pavanraj29/tomcat-sample
+    ports:
+      - 8081:8080
+  maven:
+    image: pavanraj29/maven-sample
+    depends_on:
+      - tomcat

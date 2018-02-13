@@ -1,1 +1,1 @@
-# DockerSwarm-Demo
+# docker-swarm-demo
