@@ -24,9 +24,9 @@ pipeline {
         stage("maven build") {
             steps {
                 sh '''
-                      rm -rf docker-swarm-demo
-                      git clone https://github.com/pavaraj29/docker-swarm-demo.git
-                      cd docker-swarm-demo/maven
+                      rm -rf DockerSwarm-Demo
+                      git clone https://github.com/HM-demo/DockerSwarm-Demo.git
+                      cd DockerSwarm-Demo/maven
                       sudo docker build -t maven-sample .
                       #sed -i -e 's/maven-sample/maven-sample:'${VERSION}'/g' ../sample-stack.yaml
                       sudo docker login -u pavanraj29 -p Pavan@123
@@ -40,7 +40,7 @@ pipeline {
         stage("tomcat build") {
             steps {
               sh '''
-                      cd docker-swarm-demo/tomcat
+                      cd DockerSwarm-Demo/tomcat
                       sudo docker build -t tomcat-sample .
                       #sed -i -e 's/tomcat-sample/tomcat-sample:'${VERSION}'/g' ../sample-stack.yaml
                       sudo docker login -u pavanraj29 -p Pavan@123
