@@ -23,27 +23,30 @@ pipeline {
     stages {
         stage("maven build") {
             steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'Dockercreds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                 sh '''
                       rm -rf DockerSwarm-Demo
                       git clone https://github.com/HM-demo/DockerSwarm-Demo.git
                       cd DockerSwarm-Demo/maven
                       sudo docker build -t maven-sample .
                       #sed -i -e 's/maven-sample/maven-sample:'${VERSION}'/g' ../sample-stack.yaml
-                      sudo docker login -u pavanraj29 -p Pavan@123
+                      sudo docker login -u $USERNAME -p $PASSWORD
                       sudo docker tag maven-sample ${mvn_image}:${VERSION}
                       sudo docker tag maven-sample ${mvn_image}
                       sudo docker push ${mvn_image}:${VERSION}
                       sudo docker push ${mvn_image}
                    '''                         
+                }
             }
         }
         stage("tomcat build") {
             steps {
+              withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'Dockercreds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {  
               sh '''
                       cd DockerSwarm-Demo/tomcat
                       sudo docker build -t tomcat-sample .
                       #sed -i -e 's/tomcat-sample/tomcat-sample:'${VERSION}'/g' ../sample-stack.yaml
-                      sudo docker login -u pavanraj29 -p Pavan@123
+                      sudo docker login -u $USERNAME -p $PASSWORD
                       sudo docker tag tomcat-sample ${tomcat_image}:${VERSION}
                       sudo docker tag tomcat-sample ${tomcat_image}
                       sudo docker push ${tomcat_image}:${VERSION}
