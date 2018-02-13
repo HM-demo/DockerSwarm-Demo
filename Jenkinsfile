@@ -52,6 +52,7 @@ pipeline {
                       sudo docker push ${tomcat_image}:${VERSION}
                       sudo docker push ${tomcat_image}
                 ''' 
+               }
             }
         }
         stage("Docker Stack Deployment") {
